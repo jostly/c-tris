@@ -32,14 +32,15 @@ public class MovingBlock : MonoBehaviour
             y -= fallingSpeed * Time.deltaTime;
         }
 
-        var p = transform.position;
-        p.x = x;
-        p.y = Mathf.RoundToInt(y);
-        transform.position = p;
     }
 
     // Runs 60 times per second
     private void FixedUpdate()
     {
+	var rb = GetComponent<Rigidbody>();
+	var p = rb.position;
+	p.x = x;
+	p.y = Mathf.RoundToInt(y);
+	rb.MovePosition(p);
     }
 }

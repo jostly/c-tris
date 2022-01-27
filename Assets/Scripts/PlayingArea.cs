@@ -18,19 +18,19 @@ public class PlayingArea : MonoBehaviour
         for (var x = 0; x < width; x++)
         {
             var o = Instantiate(borderPrefab, transform);
-            o.transform.position = new Vector3(x, 0, 0);
+            o.transform.localPosition = new Vector3(x, 0, 0);
         }
 
         for (var y = 0; y < height; y++)
         {
             var o = Instantiate(borderPrefab, transform);
-            o.transform.position = new Vector3(-1, y, 0);
+            o.transform.localPosition = new Vector3(-1, y, 0);
 
             o = Instantiate(borderPrefab, transform);
-            o.transform.position = new Vector3(width, y, 0);
+            o.transform.localPosition = new Vector3(width, y, 0);
         }
 
-        transform.position = new Vector3(-width / 2f + 0.5f, -0.5f, 0.5f);
+        transform.position = new Vector3(-width / 2f, 0, 1);
     }
 
 }

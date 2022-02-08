@@ -10,8 +10,10 @@ public class MovingBlock : MonoBehaviour
     public float fallingSpeed = 1f;
     public float quickFallingSpeed = 5f;
 
-    public Transform[] bottomPoints;
+    public PlayingArea playingArea;
 
+    public Shape shape;
+    
     // Update is called once per frame
     void Update()
     {
@@ -38,26 +40,29 @@ public class MovingBlock : MonoBehaviour
     // Runs 60 times per second
     private void FixedUpdate()
     {
-        foreach (var bottomPoint in bottomPoints)
-        {
-            if (CheckForCollision(bottomPoint, transform.position))
-            {
-                return;
-            }
-        }
-
         var rb = GetComponent<Rigidbody>();
         var currentPosition = rb.position;
-        rb.MovePosition(new Vector3(x, Mathf.RoundToInt(y), currentPosition.z));
+        var currentX = Mathf.RoundToInt(currentPosition.x);
+        var currentY = Mathf.RoundToInt(currentPosition.y);
+        var newX = x;
+        var newY = Mathf.RoundToInt(y);
+
+        playingArea.RemoveShape(currentX, currentY, shape);
+
+        if (playingArea.CanAddShape(newX, newY, shape))
+        {
+
+            Vector3 newPosition = new Vector3(newX, newY, currentPosition.z);
+            rb.MovePosition(newPosition);
+
+            playingArea.AddShape(newX, newY, shape);
+        }
+        else
+        {
+            playingArea.AddShape(currentX, currentY, shape);
+            x = currentX;
+            y = currentY;
+        }
     }
 
-    private bool CheckForCollision(Transform bottomPoint, Vector3 objectZeroPoint)
-    {
-        var currentPosition = bottomPoint.position;
-        var desiredPosition = new Vector3(x, Mathf.RoundToInt(y), objectZeroPoint.z) + bottomPoint.localPosition;
-
-        Vector3 direction = desiredPosition - currentPosition;
-        Ray ray = new Ray(currentPosition, direction);
-        return Physics.Raycast(ray, out _, direction.magnitude);
-    }
 }

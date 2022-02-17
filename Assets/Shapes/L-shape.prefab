@@ -740,10 +740,12 @@ MonoBehaviour:
   x: 0
   fallingSpeed: 1
   quickFallingSpeed: 10
-  bottomPoints:
-  - {fileID: 8356059338926460337}
-  - {fileID: 6236199817593241684}
-  - {fileID: 2533758037574948476}
+  playingArea: {fileID: 0}
+  shape:
+    row1: 00000000
+    row2: 00010101
+    row3: 00000001
+    row4: 00000000
 --- !u!1 &4575529873762076708
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class MovingBlock : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class MovingBlock : MonoBehaviour
     public PlayingArea playingArea;
 
     public Shape shape;
+    public GameObject model;
     
     // Update is called once per frame
     void Update()
@@ -35,6 +38,17 @@ public class MovingBlock : MonoBehaviour
         {
             y -= fallingSpeed * Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Rotate();
+        }
+    }
+
+    private void Rotate()
+    {
+        model.transform.Rotate(Vector3.forward, 90, Space.World);
+        shape.Rotate();
     }
 
     // Runs 60 times per second

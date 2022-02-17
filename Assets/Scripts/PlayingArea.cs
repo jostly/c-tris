@@ -9,18 +9,21 @@ public class PlayingArea : MonoBehaviour
     [Min(1)] public int height = 20;
 
     public GameObject borderPrefab;
+    public GameObject blockCubePrefab;
 
     private bool[,] _grid;
+    private GameObject[,] _blocks;
 
     // Start is called before the first frame update
     void Start()
     {
         _grid = new bool[width, height];
+        _blocks = new GameObject[width, height];
 
         for (var x = 0; x < width; x++)
         {
             var o = Instantiate(borderPrefab, transform);
-            o.transform.localPosition = new Vector3(x, 0, 0);
+            o.transform.localPosition = new Vector3(x, -1, 0);
         }
 
         for (var y = 0; y < height; y++)
@@ -30,6 +33,15 @@ public class PlayingArea : MonoBehaviour
 
             o = Instantiate(borderPrefab, transform);
             o.transform.localPosition = new Vector3(width, y, 0);
+        }
+
+        for (var y = 0; y < height; y++)
+        {
+            for (var x = 0; x < width; x++)
+            {
+                _blocks[x, y] = Instantiate(blockCubePrefab, transform);
+                _blocks[x, y].transform.localPosition = new Vector3(x, y, 0);
+            }
         }
     }
 
@@ -48,6 +60,7 @@ public class PlayingArea : MonoBehaviour
                 }
             }
         }
+
         return true;
     }
 
@@ -105,9 +118,15 @@ public class PlayingArea : MonoBehaviour
 
                 if (shape.HasBlockAt(tx, ty))
                 {
-                    _grid[x, y] = value;
+                    UpdateIndividualBlock(value, x, y);
                 }
             }
         }
+    }
+
+    private void UpdateIndividualBlock(bool value, int x, int y)
+    {
+        _blocks[x, y].SetActive(value);
+        _grid[x, y] = value;
     }
 }

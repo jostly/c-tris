@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class Shape
@@ -23,5 +24,9 @@ public class Shape
         }
 
         return false;
+    }
+
+    public void Rotate()
+    {
     }
 }

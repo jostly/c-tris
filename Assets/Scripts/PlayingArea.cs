@@ -39,7 +39,7 @@ public class PlayingArea : MonoBehaviour
         {
             for (var tx = 0; tx < 4; tx++)
             {
-                if (shape.IsBlocked(tx, ty))
+                if (shape.HasBlockAt(tx, ty))
                 {
                     if (!CanAddBlock(x + tx, y + ty))
                     {
@@ -103,7 +103,7 @@ public class PlayingArea : MonoBehaviour
                     continue;
                 }
 
-                if (shape.IsBlocked(tx, ty))
+                if (shape.HasBlockAt(tx, ty))
                 {
                     _grid[x, y] = value;
                 }

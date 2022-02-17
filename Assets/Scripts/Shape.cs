@@ -8,7 +8,7 @@ public class Shape
     public bool[] row3 = new bool[4];
     public bool[] row4 = new bool[4];
 
-    public bool IsBlocked(int x, int y)
+    public bool HasBlockAt(int x, int y)
     {
         switch (y) 
         {
